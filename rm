@@ -4,6 +4,14 @@ import os
 import sys
 import time
 
+### define start ###
+
+Define_File_Format = '%(file)s _deleted_at_%(deleted_at)s'
+
+Define_Trash_Path = '~/.Trash/'
+
+### define end ###
+
 def runCmd(cmd):
 	# print(cmd)
 	os.system(cmd)
@@ -12,19 +20,15 @@ args = sys.argv
 
 # remove 'rm'
 args.remove(args[0])
-
 while args[0].startswith('-'):
-	
 	args.remove(args[0])
-	
 	if len(args) == 0:
 		exit()
-
 	pass
 
-filename = args[0]
-timestamp = time.ctime()
-newName = '%s(removed at %s)' % (filename, timestamp)
+origName = args[0]
+deleted_at = time.ctime()
+newName = Define_File_Format % {'file': origName, 'deleted_at': deleted_at}
 
-runCmd('mv "%s" "%s"' % (filename, newName))
-runCmd('mv "%s" ~/.Trash/' % (newName))
+runCmd('mv \'%s\' \'%s\'' % (origName, newName))
+runCmd('mv \'%s\' %s' % (newName, Define_Trash_Path))
