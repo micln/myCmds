@@ -1,0 +1,30 @@
+#!/usr/local/bin/python3
+
+import os
+import sys
+import time
+
+def runCmd(cmd):
+	# print(cmd)
+	os.system(cmd)
+
+args = sys.argv
+
+# remove 'rm'
+args.remove(args[0])
+
+while args[0].startswith('-'):
+	
+	args.remove(args[0])
+	
+	if len(args) == 0:
+		exit()
+
+	pass
+
+filename = args[0]
+timestamp = time.ctime()
+newName = '%s(removed at %s)' % (filename, timestamp)
+
+runCmd('mv "%s" "%s"' % (filename, newName))
+runCmd('mv "%s" ~/.Trash/' % (newName))
