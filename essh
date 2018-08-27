@@ -1,0 +1,26 @@
+#!/usr/local/bin/zsh
+
+source ./config/essh
+
+host=$1
+password=$2
+
+if [ -z "$password" ]; then
+	get_password $host
+	password=$get_password_out
+fi
+
+if [ -z "$password" ]; then
+	echo "password is empty"
+	return
+fi
+
+expect -c "
+
+set timeout 10
+spawn ssh $host
+expect \"password:\"
+send \"$password\r\"
+interact
+
+"
