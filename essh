@@ -1,6 +1,7 @@
 #!/usr/local/bin/zsh
 
-source ./config/essh
+sd=`dirname $0`
+source $sd/config/essh
 
 host=$1
 password=$2
